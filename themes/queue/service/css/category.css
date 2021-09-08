@@ -1,0 +1,508 @@
+
+    body {
+
+        margin:0px;
+        padding:0px;
+
+    }
+
+    .bgimage {
+
+        position:fixed;
+        width:100%;
+        height:100%;
+
+    }
+
+    .heading {
+        position:relative;
+    }
+    .topheading {
+        color:#0b6d9a;
+        padding-top:1%;
+        font-weight:bold;
+        margin-left:15%;
+
+    }
+    .contentshape {
+        width:50%;
+    }
+    .shapeone_length_circle1 {
+        width: 100px;
+        height: 80px;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        border-radius: 50px;
+        background: #8c2891;
+        position:relative;
+        margin:0 auto;
+        margin-left:320px;
+        margin-top:5px;
+    }
+    .shapeone_length1 {
+        width:355px;
+        height:80px;
+        position:absolute;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        border-radius: 50px;
+        margin:0 auto;
+        background: white;
+        margin-top:5px;
+
+    }
+    .shapeone1 {
+        width: 90px;
+        height: 90px;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        border-radius: 50px;
+        background: linear-gradient(to left, #8c2891 2%, #da65e0 100%);
+        transition: all .3s ease;
+        cursor: pointer;
+        position:relative;
+        margin:0 auto;
+        margin-left:-40px;
+        box-shadow:3px 3px 3px rgb(213, 97, 219);
+        -moz-box-shadow: 3px 3px 3px rgb(213, 97, 219);
+        -webkit-box-shadow: 3px 3px 3px rgb(213, 97, 219);
+        -o-box-shadow: 3px 3px 3px rgb(213, 97, 219);
+        border: 3px solid #d15ed7;
+
+    }
+
+    .shapeone1:hover {
+        background: linear-gradient(to left, #0b6d9b 2%, #0b6d9b 100%);
+        border:3px solid white;
+    }
+    .shapeone_length1:hover {
+        border: 3px solid #8c2891;
+
+    }
+    .shapecenter {
+        margin-left:8%;
+        margin-top:1%;
+
+    }
+
+    .shaperight {
+        margin-left:17%;
+    }
+
+    .shapeone_length_circle2 {
+        width: 90px;
+        height: 90px;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        border-radius: 50px;
+        position:relative;
+        margin:0 auto;
+        margin-left:280px;
+        background: linear-gradient(to left, #1d80c4 2%, #27a2dd 100%);
+        box-shadow:-5px 3px 3px rgb(30, 132, 199);
+        -moz-box-shadow:-5px 3px 3px rgb(30, 132, 199);
+        -webkit-box-shadow:-5px 3px 3px rgb(30, 132, 199);
+        -o-box-shadow: -5px 3px 3px rgb(30, 132, 199);
+        border: 3px solid #269fdb;
+    }
+
+    .shapeone_length2 {
+        width:355px;
+        height:80px;
+        position:absolute;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        border-radius: 50px;
+        margin:0 auto;
+        background: white;
+        margin-top:5px;
+        margin-left:42px;
+
+    }
+
+    .shapeone2 {
+        width: 100px;
+        height: 80px;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        border-radius: 58px;
+        position:relative;
+        margin:0 auto;
+        margin-left:50px;
+        background: #1d80c4;
+        margin-top:5px;
+
+    }
+    .shapeone_length_circle2:hover {
+        background: linear-gradient(to left, #0b6d9b 2%, #0b6d9b 100%);
+        border:3px solid white;
+    }
+    .shapeone_length2:hover {
+        border: 3px solid #1d80c4;
+
+    }
+
+
+    .shapeone_length_circle3 {
+        width: 100px;
+        height: 80px;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        border-radius: 50px;
+        background: #46b649;
+        position:relative;
+        margin:0 auto;
+        margin-left:320px;
+        margin-top:5px;
+    }
+
+    .shapeone_length3 {
+
+        width:355px;
+        height:80px;
+        position:absolute;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        border-radius: 50px;
+        margin:0 auto;
+        background: white;
+        margin-top:5px;
+    }
+    .shapeone3 {
+        width: 90px;
+        height: 90px;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        border-radius: 50px;
+        background: linear-gradient(to left, #46b649 2%, #85c341 100%);
+        transition: all .3s ease;
+        cursor: pointer;
+
+        position:relative;
+        margin:0 auto;
+        margin-left:-40px;
+        box-shadow:3px 3px 3px rgb(129, 194, 65);
+        -moz-box-shadow: 3px 3px 3px rgb(129, 194, 65);
+        -webkit-box-shadow: 3px 3px 3px rgb(129, 194, 65);
+        -o-box-shadow: 3px 3px 3px rgb(129, 194, 65);
+        border: 3px solid #7fc242;
+
+    }
+    .shapeone3:hover {
+        background: linear-gradient(to left, #0b6d9b 2%, #0b6d9b 100%);
+        border:3px solid white;
+
+    }
+    .shapeone_length3:hover {
+        border: 3px solid #46b649;
+    }
+    .shapeone_length_circle4 {
+        width: 90px;
+        height: 90px;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        border-radius: 50px;
+        position:relative;
+        margin:0 auto;
+        margin-left:280px;
+        background:linear-gradient(to left, #08abbf 2%, #36d1e4 100%);
+        box-shadow:-5px 3px 3px rgb(228, 26, 36);
+        -moz-box-shadow:-5px 3px 3px rgb(44, 201, 220);
+        -webkit-box-shadow:-5px 3px 3px rgb(44, 201, 220);
+        -o-box-shadow:-5px 3px 3px rgb(44, 201, 220);
+        border: 3px solid #30ccdf;
+
+    }
+    .shapeone_length4 {
+
+        width:355px;
+        height:80px;
+        position:absolute;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        border-radius: 50px;
+        margin:0 auto;
+        background: white;
+        margin-top:5px;
+        margin-left:42px;
+    }
+    .shapeone4 {
+        width: 100px;
+        height: 80px;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        border-radius: 50px;
+        position:relative;
+        margin:0 auto;
+        margin-left:50px;
+        background: #08abbf;
+        margin-top:5px;
+    }
+    .shapeone_length_circle4:hover {
+        background: linear-gradient(to left, #0b6d9b 2%, #0b6d9b 100%);
+        border:3px solid white;
+
+    }
+    .shapeone_length4:hover {
+        border: 3px solid #08abbf;
+    }
+    .shapeone_length_circle5 {
+        width: 100px;
+        height: 80px;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        border-radius: 50px;
+        background: #f99723;
+        position:relative;
+        margin:0 auto;
+        margin-left:320px;
+        margin-top:5px;
+
+    }
+    .shapeone_length5 {
+
+        width:355px;
+        height:80px;
+        position:absolute;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        border-radius: 50px;
+        margin:0 auto;
+        background: white;
+        margin-top:5px;
+    }
+    .shapeone5 {
+        width: 90px;
+        height: 90px;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        border-radius: 50px;
+        background: linear-gradient(to left, #f99723 2%, #fbac3c 100%);
+        transition: all .3s ease;
+        cursor: pointer;
+
+        position:relative;
+        margin:0 auto;
+        margin-left:-40px;
+        box-shadow:3px 3px 3px rgb(251, 169, 57);
+        -moz-box-shadow: 3px 3px 3px rgb(251, 169, 57);
+        -webkit-box-shadow: 3px 3px 3px rgb(251, 169, 57);
+        -o-box-shadow: 3px 3px 3px rgb(251, 169, 57);
+        border: 3px solid #f99723;
+    }
+    .shapeone5:hover {
+        background: linear-gradient(to left, #0b6d9b 2%, #0b6d9b 100%);
+        border:3px solid white;
+
+    }
+    .shapeone_length5:hover {
+        border: 3px solid #f99723;
+    }
+
+
+
+    .bottom {
+        background-color:#0b6d9b;
+        height:85px;
+        color:white;
+        width:100%;
+    }
+    .fotter {
+        bottom: -22px;
+        left: 0px;
+        right: 0px;
+        margin-bottom: 0px;
+        position:fixed;
+        width:100% !important;
+
+    }
+
+    .adjust {
+        margin-left: 15px;
+        margin-right: 15px;
+        padding: 12px 20px 20px 0px;
+    }
+
+    .adjust1 {
+        padding-top:15px;
+
+    }
+    .shapefont {
+
+        font-size: 44px;
+
+        /* vertical-align: middle; */
+
+        /* text-align: center; */
+
+        padding: 24px 23px;
+        left: 0px;
+        right: 0px;
+        color: white;
+    }
+    .shapetext {
+        text-align: center;
+        border: 3px solid #ffffff;
+    }
+
+    .bnradius {
+        border-radius:50px;
+    }
+
+    .sidebar{
+        display:none;
+    }
+
+    .navbar {
+        display:none;
+    }
+
+    .breadcrumb-line {
+        display:none;
+    }
+
+    .page-header-default {
+        display:none;
+
+    }
+
+    .content {
+        padding: 0 0px 0px 0px !important;
+    }
+
+    .text-muted {
+        display:none;
+    }
+
+    #slideshow {
+        margin: 0px auto;
+        position: relative;
+        width: 100%;
+        margin-left:0px;
+        height: 100%;
+    }
+    #slideshow > div {
+        position: absolute;
+        width:100%;
+        height:100%;
+
+    }
+    .fottext {
+        padding-left:29%;
+    }
+
+    @media (min-width: 280px) and (max-width: 800px) {
+
+        .bgimage {
+
+            background: url(image url) no-repeat center center fixed;
+
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            height: 100%;
+            overflow: hidden;
+
+        }
+
+    }
+    @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+        .shapeone_length_circle1 {
+            width: 100px;
+            height: 80px;
+            -webkit-border-radius: 50px;
+            -moz-border-radius: 50px;
+            border-radius: 50px;
+            background: #8c2891;
+            position: relative;
+            margin: 0 auto;
+            margin-left: 322px;
+            margin-top: 5px;
+        }
+        .shapeone_length_circle3 {
+            width: 100px;
+            height: 80px;
+            -webkit-border-radius: 50px;
+            -moz-border-radius: 50px;
+            border-radius: 50px;
+            background: #46b649;
+            position: relative;
+            margin: 0 auto;
+            margin-left: 320px;
+            margin-top: 5px;
+        }
+        .shapeone_length_circle5 {
+            width: 100px;
+            height: 80px;
+            -webkit-border-radius: 50px;
+            -moz-border-radius: 50px;
+            border-radius: 50px;
+            background: #f99723;
+            position:relative;
+            margin:0 auto;
+            margin-left:322px;
+            margin-top:5px;
+
+        }
+        .shapeone_length_circle2 {
+            width: 90px;
+            height: 90px;
+            -webkit-border-radius: 50px;
+            -moz-border-radius: 50px;
+            border-radius: 50px;
+            position: relative;
+            margin: 0 auto;
+            margin-left: 221px;
+            background: linear-gradient(to left, #1d80c4 2%, #27a2dd 100%);
+            box-shadow: -5px 3px 3px rgb(30, 132, 199);
+            -moz-box-shadow: -5px 3px 3px rgb(30, 132, 199);
+            -webkit-box-shadow: -5px 3px 3px rgb(30, 132, 199);
+            -o-box-shadow: -5px 3px 3px rgb(30, 132, 199);
+            border: 3px solid #269fdb;
+        }
+        .shapeone_length_circle4 {
+            width: 90px;
+            height: 90px;
+            -webkit-border-radius: 50px;
+            -moz-border-radius: 50px;
+            border-radius: 50px;
+            position: relative;
+            margin: 0 auto;
+            margin-left: 221px;
+            background: linear-gradient(to left, #08abbf 2%, #36d1e4 100%);
+            box-shadow: -5px 3px 3px rgb(228, 26, 36);
+            -moz-box-shadow: -5px 3px 3px rgb(44, 201, 220);
+            -webkit-box-shadow: -5px 3px 3px rgb(44, 201, 220);
+            -o-box-shadow: -5px 3px 3px rgb(44, 201, 220);
+            border: 3px solid #30ccdf;
+        }
+        .shapeone2 {
+            width: 100px;
+            height: 80px;
+            -webkit-border-radius: 50px;
+            -moz-border-radius: 50px;
+            border-radius: 58px;
+            position: relative;
+            margin: 0 auto;
+            margin-left: 22px;
+            background: #1d80c4;
+            margin-top: 5px;
+        }
+        .shapeone4 {
+            width: 100px;
+            height: 80px;
+            -webkit-border-radius: 50px;
+            -moz-border-radius: 50px;
+            border-radius: 50px;
+            position: relative;
+            margin: 0 auto;
+            margin-left: 22px;
+            background: #08abbf;
+            margin-top: 5px;
+        }
+        .fottext {
+            padding-left:15%;
+        }
+    }
+

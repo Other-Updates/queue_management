@@ -1,0 +1,159 @@
+
+    body {
+
+        margin:0px;
+
+        padding:0px;
+
+    }
+
+    .feedbg {
+
+        width:100%;
+
+        height:100% !important;
+
+        position:absolute;
+
+        top: 0px;
+
+    }
+
+    .feedcontent {
+
+        position:relative;
+
+    }
+
+    .checked {
+
+        color: orange;
+
+    }
+
+    .feedbox {
+      
+        width:40%;
+        margin:0 auto !important;
+        margin-top:12%;				
+		width:40%;
+		color:white;
+		
+    }
+	
+
+    .feedtext {
+
+        padding:25px;
+		
+
+    }
+
+    .company {
+
+        color:#0b6d9a;
+        font-weight:bold;
+        padding-top:1%;
+        padding-left:3%;
+
+    }
+
+    .sidebar{
+
+        display:none;
+
+    }
+
+    .navbar {
+
+        display:none;
+
+    }
+
+    .breadcrumb-line {
+
+        display:none;
+
+    }
+
+    .page-header-default {
+
+        display:none;
+
+    }
+
+    .content {
+
+        padding: 0 0px 0px 0px !important;
+
+    }
+
+    .text-muted {
+
+        display:none;
+
+    }
+
+    #error_msg {
+
+        color:#c71818;
+
+    }
+
+    .star {text-shadow: 0 0 1px #F48F0A;
+           cursor: pointer;
+           font-size: 45px;
+           margin-top: -19px;  }
+    .feedhead {
+        <!--Background-color:#3c8daa;-->
+        color:white;
+        text-align:center;
+        font-weight:bold;
+        font-size:45px;        
+        padding-top:10%;
+		
+    }
+    .areaheight {
+        height:200px !important;
+        font-size:20px;
+    }
+    .feedbacksize {
+        font-size:20px;
+    }
+	@media (min-width: 768px) and (max-width: 1366px) {
+		.areaheight {
+        height:130px !important;
+        font-size:16px;
+		}
+		.btn {    
+    padding: 0px 12px;
+    font-size: 11px;
+    line-height: -0.461538;    
+		}
+	}
+	
+    @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+
+        .feedbox {
+            <!--background-color: white;-->
+            width: 44% !important;
+            height: 465px;
+            margin: 0 auto;
+            margin-top: 20%;
+						
+        }
+			.star {
+			text-shadow: 0 0 1px #F48F0A;
+			cursor: pointer;
+			font-size: 35px;
+			margin-top: -11px;
+		}
+			.feedbacksize {
+			font-size: 20px;
+		}
+			.areaheight {
+			height: 190px !important;
+			font-size: 15px;
+			width: 315px;
+	}
+    }
