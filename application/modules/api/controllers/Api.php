@@ -147,9 +147,29 @@ class Api extends REST_Controller
 	public function customer_login()
 	{
 		$data = $this->_get_customer_post_values();
+		// print_r($data);
 		if (!empty($data)) {
 			$login_result = $this->api_model->check_login_details($data);
-			// print($login_result);exit;
+			if ($data['emp_name'] == "") {
+				$output = array(
+					'status' => 'false',
+					'code' => '422',
+					'message' => "Employee name is required"
+				);
+				$this->response($output);
+				exit;
+			}
+			if ($data['password'] == "") {
+				$output = array(
+					'status' => 'false',
+					'code' => '422',
+					'message' => "Password is required"
+				);
+				$this->response($output);
+				exit;
+			}
+			// print_r($login_result);
+			// exit;
 			if ($login_result) {
 				// if ($login_result == 1) {
 				// $output = array('status' => 'Error', 'message' => 'OTP not verified');
@@ -311,6 +331,15 @@ class Api extends REST_Controller
 		$json_input = $this->_get_customer_post_values();
 		if (!empty($json_input)) {
 			$user_details = $this->api_model->get_customer_details($json_input['counter_id']);
+			if ($json_input['counter_id'] == "") {
+				$output = array(
+					'status' => 'false',
+					'code' => '422',
+					'message' => "counter_id is required"
+				);
+				$this->response($output);
+				exit;
+			}
 			if ($user_details) {
 				$output = array(
 					"status" => "Success",
@@ -340,13 +369,15 @@ class Api extends REST_Controller
 	{
 		$json_input = $this->_get_customer_post_values();
 		if (!empty($json_input)) {
-			$customer['counter_name'] = $json_input['counter_name'];
-			$customer['emp_name'] = $json_input['emp_name'];
+			$counter_data['id'] = $json_input['counter_id'];
+			$counter_data['counter_name'] = $json_input['counter_name'];
+
+			$emp_data['emp_name'] = $json_input['emp_name'];
 			// $customer['dDob'] = $json_input['dob'];
-			$customer['mobile_number'] = $json_input['mobile_number'];
-			$customer['email_address'] = $json_input['email_id'];
-			$customer['password'] = $json_input['password'];
-			$customer['counter_id'] = $json_input['counter_id'];
+			$emp_data['mobile_number'] = $json_input['mobile_number'];
+			$emp_data['email_address'] = $json_input['email_id'];
+			$emp_data['password'] = $json_input['password'];
+
 			// $customer['vProfession'] = $json_input['profession'];
 			// $check_duplicate_email = $this->api_model->check_field_exists('email_address', $json_input['email_id'], $json_input['counter_id']);
 			// if ($check_duplicate_email) {
@@ -354,13 +385,23 @@ class Api extends REST_Controller
 			// 	$this->response($output);
 			// 	exit;
 			// }
-			$profile = $this->api_model->update_fields_counter_id($json_input['counter_id']);
-			$profile = $this->api_model->update_fields_counter_name($json_input['counter_name']);
-			$profile = $this->api_model->update_fields($json_input, $customer);
+			if ($json_input['counter_id'] == "" || $json_input['counter_name'] == "" || $json_input['emp_name'] == "" || $json_input['mobile_number'] == "" || $json_input['email_id'] == "" || $json_input['password'] == "") {
+				$output = array(
+					'status' => 'false',
+					'code' => '422',
+					'message' => "Field is required"
+				);
+				$this->response($output);
+				exit;
+			}
+
+			$profile = $this->api_model->update_fields($counter_data, $emp_data);
+			// echo "<pre>";
+			// print_r($profile);
+			// exit;
 			if ($profile) {
-				$update_data = $this->api_model->check_customer_name($json_input['counter_name']);
-				$update_data = $this->api_model->check_customer_id($json_input['counter_id']);
-				$update_data = $this->api_model->check_customer_otp($json_input);
+				// $update_data = $this->api_model->check_counter($counter_data);
+				$update_data = $this->api_model->check_emp($emp_data, $counter_data);
 				$output = array('status' => 'Success', 'message' => 'Profile details updated', 'data' => $update_data);
 				$this->response($output);
 			} else {
@@ -378,6 +419,15 @@ class Api extends REST_Controller
 		$data = $this->_get_customer_post_values();
 		if (!empty($data)) {
 			$logout = $this->api_model->get_customer_details($data['counter_id']);
+			if ($data['counter_id'] == "") {
+				$output = array(
+					'status' => 'false',
+					'code' => '422',
+					'message' => "counter_id is required"
+				);
+				$this->response($output);
+				exit;
+			}
 			// print($logout);
 			// exit;
 			if ($logout) {
@@ -499,21 +549,78 @@ class Api extends REST_Controller
 		}
 	}
 
-	public function get_police_officers()
+	public function get_queue_category_list()
 	{
-		$police_officers = $this->api_model->police_officers_details();
-		if ($police_officers) {
+		$category_list = $this->api_model->get_queue_category_list();
+		if ($category_list) {
 			$output = array(
 				'code' => '200',
 				'type' => 'Success',
-				'message' => 'Police officers list.',
-				'data' => $police_officers,
+				'message' => 'Queue category list.',
+				'data' => $category_list,
 			);
 			$this->response($output);
 		} else {
 			$output = array(
 				'status' => 'Error',
-				'message' => 'police officers details not found'
+				'message' => 'Category list not found'
+			);
+			$this->response($output);
+		}
+	}
+	public function get_tokenlist()
+	{
+		$token_list = $this->api_model->get_token_list();
+		if ($token_list) {
+			// if ($token_list['counter_id'] == "") {
+			// 	$output = array(
+			// 		'status' => 'false',
+			// 		'code' => '422',
+			// 		'message' => "counter_id is required"
+			// 	);
+			// 	$this->response($output);
+			// 	exit;
+			// }
+			// if ($token_list['Counter_name'] == "") {
+			// 	$output = array(
+			// 		'status' => 'false',
+			// 		'code' => '422',
+			// 		'message' => "counter_id is required"
+			// 	);
+			// 	$this->response($output);
+			// 	exit;
+			// }
+
+			$output = array(
+				'code' => '200',
+				'type' => 'Success',
+				'message' => 'Token list',
+				'data' => $token_list,
+			);
+			$this->response($output);
+		} else {
+			$output = array(
+				'status' => 'Error',
+				'message' => 'No token list found'
+			);
+			$this->response($output);
+		}
+	}
+	public function create_token()
+	{
+		$token_list = $this->api_model->get_created_token();
+		if ($token_list) {
+			$output = array(
+				'code' => '200',
+				'type' => 'Success',
+				'message' => 'Token list',
+				'data' => $token_list,
+			);
+			$this->response($output);
+		} else {
+			$output = array(
+				'status' => 'Error',
+				'message' => 'No token list found'
 			);
 			$this->response($output);
 		}
@@ -587,6 +694,45 @@ class Api extends REST_Controller
 			$this->response($output);
 		}
 	}
+	public function update_queue_status()
+	{
+		$json_input = $this->_get_customer_post_values();
+		$data = array();
+		// echo "<pre>";
+		// print_r($json_input);
+		// exit;
+		if (!empty($json_input)) {
+			$counter_data['id'] = $json_input['Counter_id'];
+			$counter_data['counter_name'] = $json_input['counter_name'];
+
+			$token_data['id'] = $json_input['token_id'];
+			$token_data['token_number'] = $json_input['token_number'];
+			$token_data['token_status'] = $json_input['Status'];
+			$token_data['remarks'] = $json_input['Remarks'];
+			$token_data['transfer_counter_id'] = $json_input['Transfer_counter'];
+			$token_data['updated_date'] = date('Y-m-d h:i:s');
+			// $home['iPincode'] = $json_input['pincode'];
+			// $home['vAttachment'] = $json_input['attachments'];
+			// $home['vIdProoftype'] = $json_input['identification_number_type'];
+			// $home['iIdProofNumber'] = $json_input['identification_number'];
+
+			$update = $this->api_model->update_queue_status($token_data, $counter_data);
+			// echo "<pre>";
+			// print_r($update);
+			// exit;
+			if ($update) {
+				$home_details = $this->api_model->get_queue_details_by_insert_id($token_data, $counter_data);
+				$output = array('status' => 'Success', 'code' => 200, 'message' => 'Details updated', 'data' => $home_details);
+				$this->response($output);
+			} else {
+				$output = array('status' => 'Error', 'message' => 'Details not updated');
+				$this->response($output);
+			}
+		} else {
+			$output = array('status' => 'error', 'message' => 'Please enter input data');
+			$this->response($output);
+		}
+	}
 
 	public function change_password()
 	{
@@ -608,14 +754,54 @@ class Api extends REST_Controller
 		}
 	}
 
-	public function terms_and_conditions()
+	public function feedback()
 	{
-		$terms = $this->api_model->get_terms_and_conditions();
-		if ($terms) {
-			$output = array('status' => 'success', 'message' => $terms);
-			$this->response($output);
+		$terms = $this->_get_customer_post_values();
+		if (!empty($terms)) {
+			$terms = $this->api_model->get_terms_and_conditions();
+			if ($terms) {
+				$output = array('status' => 'success', 'message' =>  "Feedback has been updated successfully");
+				$this->response($output);
+			} else {
+				$output = array('status' => 'error', 'message' => 'Something went wrong');
+				$this->response($output);
+			}
 		} else {
-			$output = array('status' => 'error', 'message' => 'No data found');
+			$output = array('status' => 'error', 'message' => 'Something went wrong');
+			$this->response($output);
+		}
+	}
+	public function reassign_missed_token()
+	{
+		$terms = $this->_get_customer_post_values();
+		if (!empty($terms)) {
+			$terms = $this->api_model->reassign_missed_token();
+			if ($terms) {
+				$output = array('status' => 'success', 'message' =>  "Missed Token Reassigned Successfully");
+				$this->response($output);
+			} else {
+				$output = array('status' => 'error', 'message' => 'Invalid token number');
+				$this->response($output);
+			}
+		} else {
+			$output = array('status' => 'error', 'message' => 'no data found');
+			$this->response($output);
+		}
+	}
+	public function reassign_hold_token()
+	{
+		$terms = $this->_get_customer_post_values();
+		if (!empty($terms)) {
+			$terms = $this->api_model->reassign_hold_token();
+			if ($terms) {
+				$output = array('status' => 'success', 'message' =>  "Hold Token Reassigned Successfully");
+				$this->response($output);
+			} else {
+				$output = array('status' => 'error', 'message' => 'Invalid token number');
+				$this->response($output);
+			}
+		} else {
+			$output = array('status' => 'error', 'message' => 'no data found');
 			$this->response($output);
 		}
 	}

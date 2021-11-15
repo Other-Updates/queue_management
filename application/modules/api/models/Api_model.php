@@ -85,7 +85,7 @@ class Api_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->where('emp_name', $data['emp_name']);
-        $this->db->where('password', (md5($data['password'])));
+        $this->db->where('password', ($data['password']));
         $this->db->where('status', 1);
         $this->db->from('que_employee');
         $query = $this->db->get();
@@ -96,11 +96,29 @@ class Api_model extends CI_Model
         }
     }
 
-    public function check_customer_otp($data)
+    public function check_counter($counter_data)
     {
-        $this->db->select('*');
+        $this->db->select('que_counter.id as counter_id,que_counter.counter_name');
         // $this->db->where('counter_id', $data);
-        $query = $this->db->get('que_employee')->row_array();
+        $this->db->from('que_counter');
+        $query = $this->db->get();
+        if (!empty($query)) {
+            //$result['customer_id']=$query['id'];
+            //$result['customer_details']=$query;
+            //$result['settings'] = $this->getSettings();
+            return $query;
+        }
+        return false;
+    }
+    public function check_emp($emp_data)
+    {
+        $this->db->select('que_counter.id as counter_id,que_counter.counter_name,que_employee.emp_name,que_employee.mobile_number,que_employee.email_address,que_employee.password');
+        $this->db->from('que_employee');
+        $this->db->join('que_token_details', 'que_employee.id = que_token_details.emp_id');
+        $this->db->join('que_counter', 'que_token_details.counter_id=que_counter.id');
+        // $this->db->where('counter_id', $data);
+
+        $query = $this->db->get();
         if (!empty($query)) {
             //$result['customer_id']=$query['id'];
             //$result['customer_details']=$query;
@@ -138,11 +156,13 @@ class Api_model extends CI_Model
 
 
 
-    public function update_fields($id, $data)
+    public function update_fields($counter_data, $emp_data)
     {
         // $data['iUpdatedAt'] = date('Y-m-d h:i:s');
-        // $this->db->where('counter_id', $id);
-        $this->db->update('que_employee', $data);
+        $this->db->where('id', $counter_data['id']);
+        $this->db->update('que_counter', $counter_data);
+        $this->db->update('que_employee', $emp_data);
+
         return true;
     }
     // public function update_fields_counter_name($id, $data)
@@ -215,11 +235,15 @@ class Api_model extends CI_Model
         return FALSE;
     }
 
-    public function get_lockedhome_details_by_insert_id($data)
+    public function get_queue_details_by_insert_id($token_data, $counter_data)
     {
-        $this->db->select('tab_1.*');
-        $this->db->where('tab_1.iLockedHomeId', $data);
-        $query = $this->db->get('vnr_locked_home' . ' AS tab_1');
+        $this->db->select('que_counter.id as counter_id,que_counter.counter_name,que_token_details.token_number,que_token_details.id as token_id,que_token_details.token_status,que_token_details.remarks');
+        // $this->db->where('id', $token_data['id']);
+        $this->db->from('que_token_details');
+        // $this->db->where('id', $counter_data['id']);
+        // $this->db->from('que_counter', $counter_data);
+        $this->db->join('que_counter', 'que_token_details.counter_id=que_counter.id', 'left');
+        $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->row_array();
         }
@@ -267,10 +291,11 @@ class Api_model extends CI_Model
         }
     }
 
-    public function get_ads()
+    public function get_queue_category_list()
     {
-        $this->db->select('*');
-        $this->db->from('vnr_manage_ads');
+        $this->db->select('que_category.id,que_category.sub_category,que_category_type.id,que_category_type.category_type');
+        $this->db->from('que_category');
+        $this->db->join('que_category_type', 'que_category.category_id=que_category_type.id', 'right');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result_array();
@@ -278,6 +303,57 @@ class Api_model extends CI_Model
             return false;
         }
     }
+    public function get_token_list()
+    {
+        $this->db->select('que_token_details.token_number,que_token_details.id,que_token_details.counter_id,que_counter.id,que_counter.counter_name,que_counter.status');
+        $this->db->from('que_token_details');
+        $this->db->join('que_counter', 'que_token_details.counter_id=que_counter.id', 'right');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return false;
+        }
+    }
+    public function get_created_token()
+    {
+        $this->db->select('que_category.category_id,que_category_type.category_type,que_category_type.id as sub_category_id,que_category.sub_category,que_token_details.id as token_id,que_token_details.token_number,que_token_details.counter_id,que_token_details.created_date,que_counter.id,que_counter.counter_name,que_counter.status');
+        $this->db->from('que_token_details');
+        $this->db->from('que_category');
+        $this->db->join('que_counter', 'que_token_details.counter_id=que_counter.id', 'right');
+        $this->db->join('que_category_type', 'que_category.category_id=que_category_type.id', 'right');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return false;
+        }
+    }
+    public function get_ads()
+    {
+        $base_url = base_url() . 'images/';
+        $this->db->select("id,CONCAT('" . $base_url . "',name) AS image,", FALSE);
+        $this->db->from('que_advertisement');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return false;
+        }
+    }
+
+    // public function get_queue_category_list()
+    // {
+    //     $this->db->select('*');
+    //     $this->db->from('vnr_manage_ads');
+    //     $query = $this->db->get();
+    //     if ($query->num_rows() > 0) {
+    //         return $query->result_array();
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
 
     public function get_news()
     {
@@ -291,18 +367,40 @@ class Api_model extends CI_Model
         }
     }
 
-    public function update_locked_home($id, $data)
+    public function update_queue_status($token_data, $counter_data)
     {
-        $data['tUpdatedAt'] = date('Y-m-d h:i:s');
-        $this->db->where('iLockedHomeId', $id);
-        $this->db->update('vnr_locked_home', $data);
+        $this->db->where('id', $token_data['id']);
+        $this->db->update('que_token_details', $token_data);
+        $this->db->where('id', $counter_data['id']);
+        $this->db->update('que_counter', $counter_data);
         return true;
     }
 
     public function get_terms_and_conditions()
     {
         $this->db->select('*');
-        $this->db->from('vnr_terms_and_conditions');
+        $this->db->from('que_feedback');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->row_array();
+        } else
+            return false;
+    }
+    public function reassign_missed_token()
+    {
+        $this->db->select('token_number');
+        $this->db->from('que_token_details');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->row_array();
+        } else
+            return false;
+    }
+    public function reassign_hold_token()
+    {
+        $this->db->select('token_number');
+        $this->db->where('token_status', 2);
+        $this->db->from('que_token_details');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->row_array();
