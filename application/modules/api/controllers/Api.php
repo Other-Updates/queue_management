@@ -144,7 +144,7 @@ class Api extends REST_Controller
 	// 	}
 	// }
 
-	public function customer_login()
+	public function employee_login()
 	{
 		$data = $this->_get_customer_post_values();
 		// print_r($data);
@@ -571,6 +571,24 @@ class Api extends REST_Controller
 	public function get_tokenlist()
 	{
 		$token_list = $this->api_model->get_token_list();
+		if ($token_list['counter_id'] == "") {
+			$output = array(
+				'status' => 'false',
+				'code' => '422',
+				'message' => "counter_id is required"
+			);
+			$this->response($output);
+			exit;
+		}
+		if ($token_list['counter_name'] == "") {
+			$output = array(
+				'status' => 'false',
+				'code' => '422',
+				'message' => "counter_id is required"
+			);
+			$this->response($output);
+			exit;
+		}
 		if ($token_list) {
 			// if ($token_list['counter_id'] == "") {
 			// 	$output = array(
@@ -776,6 +794,15 @@ class Api extends REST_Controller
 		$terms = $this->_get_customer_post_values();
 		if (!empty($terms)) {
 			$terms = $this->api_model->reassign_missed_token();
+			if ($terms['token_number'] == "") {
+				$output = array(
+					'status' => 'false',
+					'code' => '422',
+					'message' => "counter_id is required"
+				);
+				$this->response($output);
+				exit;
+			}
 			if ($terms) {
 				$output = array('status' => 'success', 'message' =>  "Missed Token Reassigned Successfully");
 				$this->response($output);
