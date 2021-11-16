@@ -568,7 +568,7 @@ class Api extends REST_Controller
 			$this->response($output);
 		}
 	}
-	public function get_tokenlist()
+	public function get_token_list()
 	{
 		$token_list = $this->api_model->get_token_list();
 		if ($token_list['counter_id'] == "") {
@@ -772,7 +772,7 @@ class Api extends REST_Controller
 		}
 	}
 
-	public function feedback()
+	public function update_feedback()
 	{
 		$terms = $this->_get_customer_post_values();
 		if (!empty($terms)) {
