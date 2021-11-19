@@ -28,7 +28,7 @@
                         <div class="col-md-4">
                             <div class="form-group has-feedback has-feedback-left">
                                 <label><strong>Username:</strong></label><span class="req">*</span>
-                                <input type="text" name="employee[username]" id="username" class="form-control input-sm required" value="<?php echo ucfirst($employee[0]['emp_name']); ?>"placeholder="Enter Username" maxlength="50">
+                                <input type="text" name="employee[username]" id="username" class="form-control input-sm required" value="<?php echo ucfirst($employee[0]['emp_name']); ?>" placeholder="Enter Username" maxlength="50">
                                 <input type="hidden" name="current_username" id="current_username" value="<?php echo ucfirst($employee[0]['emp_name']); ?>">
                                 <span class="error_msg"></span>
                                 <div class="form-control-feedback">
@@ -39,7 +39,7 @@
                         <div class="col-md-4">
                             <div class="form-group has-feedback has-feedback-left">
                                 <label><strong>Mobile Number:</strong></label><span class="req">*</span>
-                                <input type="text" name="employee[mobile_number]" id="mobile" class="form-control input-sm required" value="<?php echo $employee[0]['mobile_number']; ?>"  placeholder="Enter Mobile Number" maxlength="10">
+                                <input type="text" name="employee[mobile_number]" id="mobile" class="form-control input-sm required" value="<?php echo $employee[0]['mobile_number']; ?>" placeholder="Enter Mobile Number" maxlength="10">
                                 <span class="error_msg"></span>
                                 <div class="form-control-feedback">
                                     <i class="icon-mobile2"></i>
@@ -51,7 +51,7 @@
                         <div class="col-md-4">
                             <div class="form-group has-feedback has-feedback-right">
                                 <label><strong>Email Address:</strong></label><span class="req">*</span>
-                                <input type="text" name="employee[email_address]" id="email" class="form-control input-sm required" value="<?php echo $employee[0]['email_address']; ?>"  placeholder="Enter Email Address" maxlength="100">
+                                <input type="text" name="employee[email_address]" id="email" class="form-control input-sm required" value="<?php echo $employee[0]['email_address']; ?>" placeholder="Enter Email Address" maxlength="100">
                                 <span class="error_msg"></span>
                                 <div class="form-control-feedback">
                                     <i class="icon-mail5"></i>
@@ -61,7 +61,7 @@
                         <div class="col-md-4">
                             <div class="form-group has-feedback has-feedback-left">
                                 <label><strong>Password:</strong></label><span class="req" style="font-size: 12px;"> (Leave as empty, if you do not change password)</span>
-                                <input type="password" name="employee[password]" id="password" class="form-control input-sm "  minlength="6" placeholder="Enter Password">
+                                <input type="password" name="employee[password]" id="password" class="form-control input-sm " minlength="6" placeholder="Enter Password">
                                 <span class="error_msg"></span>
                                 <div class="form-control-feedback">
                                     <i class="icon-lock"></i>
@@ -71,7 +71,7 @@
                         <div class="col-md-4">
                             <div class="form-group has-feedback has-feedback-left">
                                 <label><strong>Retype Password:</strong></label><span class="req">*</span>
-                                <input type="password" name="retype_password" id="retype_password" minlength="6" class="form-control input-sm " placeholder="Retype Password"  onChange="checkPasswordMatch();">
+                                <input type="password" name="retype_password" id="retype_password" minlength="6" class="form-control input-sm " placeholder="Retype Password" onChange="checkPasswordMatch();">
                                 <span class="error_msg"></span>
                                 <div class="form-control-feedback">
                                     <i class="icon-lock"></i>
@@ -109,7 +109,7 @@
 </div>
 
 <script type="text/javascript">
-    $('#lastname').on('keyup blur', function () {
+    $('#lastname').on('keyup blur', function() {
         this_val = $.trim($(this).val());
         if ($.trim($(this).val()) == '') {
             $(this).closest('div.form-group').find('.error_msg').text('This field is required').slideDown('500').css('display', 'inline-block');
@@ -117,7 +117,7 @@
             $('#lastname').closest('div.form-group').find('.error_msg').text('').slideUp('500');
         }
     });
-    $('#firstname').on('keyup blur', function () {
+    $('#firstname').on('keyup blur', function() {
         this_val = $.trim($(this).val());
         if ($.trim($(this).val()) == '') {
             $(this).closest('div.form-group').find('.error_msg').text('This field is required').slideDown('500').css('display', 'inline-block');
@@ -126,7 +126,7 @@
         }
 
     });
-    $('#username').on('keyup blur', function () {
+    $('#username').on('keyup blur', function() {
         this_val = $.trim($(this).val());
         if ($.trim($(this).val()) == '') {
             $(this).closest('div.form-group').find('.error_msg').text('This field is required').slideDown('500').css('display', 'inline-block');
@@ -134,9 +134,11 @@
             current_username = ('#current_username').val();
             $.ajax({
                 type: 'POST',
-                data: {username: $.trim($('#username').val())},
+                data: {
+                    username: $.trim($('#username').val())
+                },
                 url: '<?php echo base_url(); ?>employee_management/employee/is_user_name_available/',
-                success: function (data) {
+                success: function(data) {
                     if (data == 'yes') {
                         $('#username').closest('div.form-group').find('.error_msg').text('This User Name is already taken').slideDown('500').css('display', 'inline-block');
                     } else {
@@ -149,7 +151,7 @@
         }
 
     });
-    $('#email').on('keyup blur', function () {
+    $('#email').on('keyup blur', function() {
         this_val = $.trim($(this).val());
         emailRegexStr = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         is_valid = emailRegexStr.test(this_val);
@@ -160,9 +162,11 @@
         } else {
             $.ajax({
                 type: 'POST',
-                data: {email: $.trim($('#email').val())},
+                data: {
+                    email: $.trim($('#email').val())
+                },
                 url: '<?php echo base_url(); ?>employee_management/employee/is_email_address_available/',
-                success: function (data) {
+                success: function(data) {
 
                     if (data == 'yes') {
 
@@ -176,7 +180,7 @@
             });
         }
     });
-    $('#mobile').on('keyup blur', function () {
+    $('#mobile').on('keyup blur', function() {
         this_val = $.trim($(this).val());
         pattern_phone = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
         is_valid = pattern_phone.test(this_val);
@@ -186,9 +190,9 @@
             $(this).closest('div.form-group').find('.error_msg').text('Enter Valid Mobile Number').slideDown('500').css('display', 'inline-block');
         }
     });
-    $('.submit').click(function () {
+    $('.submit').click(function() {
         m = 0;
-        $('.required').each(function () {
+        $('.required').each(function() {
             this_val = $.trim($(this).val());
             this_id = $(this).attr('id');
             if (this_val == '') {
@@ -225,9 +229,12 @@
                 $.ajax({
                     type: 'POST',
                     async: false,
-                    data: {username: $.trim($('#username').val()), id: $('#user_id').val()},
+                    data: {
+                        username: $.trim($('#username').val()),
+                        id: $('#user_id').val()
+                    },
                     url: '<?php echo base_url(); ?>employee_management/employee/is_user_name_available/',
-                    success: function (data) {
+                    success: function(data) {
                         if (data == 'yes') {
                             $('#username').closest('div.form-group').find('.error_msg').text('This User Name is already taken').slideDown('500').css('display', 'inline-block');
                             m++;
@@ -246,4 +253,3 @@
             return false;
     });
 </script>
-

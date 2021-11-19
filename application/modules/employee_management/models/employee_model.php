@@ -3,16 +3,19 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Employee_model extends CI_Model {
+class Employee_model extends CI_Model
+{
 
     private $que_employee = 'que_employee';
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
         $this->load->database();
     }
 
-    function insert_employee($data) {
+    function insert_employee($data)
+    {
         $data['password'] = md5($data['password']);
         if ($this->db->insert($this->que_employee, $data)) {
             $user_id = $this->db->insert_id();
@@ -21,7 +24,8 @@ class Employee_model extends CI_Model {
         return FALSE;
     }
 
-    function update_employee($data, $user_id) {
+    function update_employee($data, $user_id)
+    {
         if (empty($data['password'])) {
             unset($data['password']);
         } else {
@@ -35,7 +39,8 @@ class Employee_model extends CI_Model {
         return FALSE;
     }
 
-    function delete_employee($id) {
+    function delete_employee($id)
+    {
         $this->db->where('id', $id);
         if ($this->db->delete($this->que_employee)) {
             return 1;
@@ -43,7 +48,8 @@ class Employee_model extends CI_Model {
         return 0;
     }
 
-    function reset_password($user, $user_id) {
+    function reset_password($user, $user_id)
+    {
         $id = base64_decode(urldecode($user_id));
         $this->db->where('id', $id);
         if ($this->db->update($this->que_employee, $user)) {
@@ -52,7 +58,8 @@ class Employee_model extends CI_Model {
         return FALSE;
     }
 
-    function get_all_employee($client_id) {
+    function get_all_employee($client_id)
+    {
         $this->db->select('tab_1.*');
         $this->db->order_by('tab_1.id', 'desc');
         $this->db->where('tab_1.client_id', $client_id);
@@ -85,7 +92,8 @@ class Employee_model extends CI_Model {
         return NULL;
     }
 
-    function get_employee_by_id($id) {
+    function get_employee_by_id($id)
+    {
         $this->db->select('tab_1.*');
 
         $this->db->where('tab_1.id', $id);
@@ -96,7 +104,8 @@ class Employee_model extends CI_Model {
         return NULL;
     }
 
-    function is_user_available($username, $id = NULL) {
+    function is_user_available($username, $id = NULL)
+    {
         $this->db->select($this->que_employee . '.id');
         $this->db->where('LCASE(username)', strtolower($username));
         if (!empty($id))
@@ -108,7 +117,8 @@ class Employee_model extends CI_Model {
         return NULL;
     }
 
-    function is_email_address_available($email, $id = NULL) {
+    function is_email_address_available($email, $id = NULL)
+    {
         $this->db->select($this->que_employee . '.id');
         $this->db->where('LCASE(email_address)', strtolower($email));
         if (!empty($id))
@@ -120,7 +130,8 @@ class Employee_model extends CI_Model {
         return NULL;
     }
 
-    function is_mobile_number_available($mobile, $id = NULL) {
+    function is_mobile_number_available($mobile, $id = NULL)
+    {
         $this->db->select($this->que_employee . '.id');
         $this->db->where('LCASE(mobile_number)', strtolower($mobile));
         if (!empty($id))
@@ -132,7 +143,8 @@ class Employee_model extends CI_Model {
         return NULL;
     }
 
-    function get_emp_by_login($username, $password) {
+    function get_emp_by_login($username, $password)
+    {
         $password = md5($password);
         $this->db->select('tab_1.*');
         $this->db->where('password = ', $password);
@@ -147,7 +159,8 @@ class Employee_model extends CI_Model {
         return NULL;
     }
 
-    function get_increment_code_based_client($client_id) {
+    function get_increment_code_based_client($client_id)
+    {
         $this->db->where('client_id', $client_id);
         $query = $this->db->get('que_employee');
         if ($query->num_rows() > 0) {
@@ -161,5 +174,4 @@ class Employee_model extends CI_Model {
         }
         return $entry_number;
     }
-
 }

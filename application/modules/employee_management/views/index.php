@@ -1,9 +1,9 @@
 <?php $theme_path = $this->config->item('theme_locations') . 'event'; ?>
 
 <style>
-
-    .ui-dialog {z-index: 999;}
-
+    .ui-dialog {
+        z-index: 999;
+    }
 </style>
 
 <div class="panel panel-flat">
@@ -12,7 +12,7 @@
 
         <h5 class="panel-title">Manage Employee
 
-            <?php if ($this->user_auth->is_action_allowed('employee_management', 'employee', 'add')): ?>
+            <?php if ($this->user_auth->is_action_allowed('employee_management', 'employee', 'add')) : ?>
 
                 <a href="<?php echo base_url(); ?>employee_management/employee/add"><span class="label bg-success">Add New</span></a>
 
@@ -50,13 +50,13 @@
 
                 <th>Email Address</th>
 
-                 <th>Counter Name</th>
+                <th>Counter Name</th>
 
-                 <th>Current Status</th>
+                <th>Current Status</th>
 
                 <th>Status</th>
 
-                <?php if ($this->user_auth->is_action_allowed('employee_management', 'employee', 'edit') || $this->user_auth->is_action_allowed('users', 'users', 'delete')): ?>
+                <?php if ($this->user_auth->is_action_allowed('employee_management', 'employee', 'edit') || $this->user_auth->is_action_allowed('users', 'users', 'delete')) : ?>
 
                     <th class="text-center">Actions</th>
 
@@ -76,7 +76,7 @@
 
                 foreach ($employee as $list) {
 
-                    ?>
+            ?>
 
                     <tr class="delete<?php echo $list['id']; ?>">
 
@@ -97,21 +97,21 @@
 
                         <td class="statustable"><span class="label label-<?php echo ($list['status'] == 1) ? 'success' : 'default'; ?>"><?php echo ($list['status'] == 1) ? 'Active' : 'Inactive'; ?></span></td>
 
-                        <?php if ($this->user_auth->is_action_allowed('employee_management', 'employee', 'edit') || $this->user_auth->is_action_allowed('users', 'users', 'delete')): ?>
+                        <?php if ($this->user_auth->is_action_allowed('employee_management', 'employee', 'edit') || $this->user_auth->is_action_allowed('users', 'users', 'delete')) : ?>
 
                             <td class="text-center">
 
-                                <?php if ($this->user_auth->is_action_allowed('employee_management', 'employee', 'edit')): ?>
+                                <?php if ($this->user_auth->is_action_allowed('employee_management', 'employee', 'edit')) : ?>
 
                                     <a href="<?php echo base_url(); ?>employee_management/employee/edit/<?php echo $list['id']; ?>" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
 
                                 <?php endif; ?>
 
-                                <?php if ($this->user_auth->is_action_allowed('employee_management', 'employee', 'delete')): ?>
+                                <?php if ($this->user_auth->is_action_allowed('employee_management', 'employee', 'delete')) : ?>
 
                                     <a href="javascript:void(0);" class="btn btn-danger btn-xs delete_user" onclick="delete_employee(<?php echo $list['id']; ?>)" data-original-title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
 
-                                    <?php endif; ?>
+                                <?php endif; ?>
 
                             </td>
 
@@ -119,12 +119,10 @@
 
                     </tr>
 
-                    <?php
+            <?php
 
                     $s++;
-
                 }
-
             }
 
             ?>
@@ -138,8 +136,7 @@
 
 
 <script type="text/javascript">
-
-    $(document).ready(function () {
+    $(document).ready(function() {
 
         $('th.sorting_disabled').css('width', '135px');
 
@@ -155,7 +152,7 @@
 
             text: 'Are you sure to Delete?',
 
-            confirm: function (button) {
+            confirm: function(button) {
 
                 $.ajax({
 
@@ -163,9 +160,11 @@
 
                     method: "POST",
 
-                    data: {id: id},
+                    data: {
+                        id: id
+                    },
 
-                    success: function (data) {
+                    success: function(data) {
 
 
 
@@ -183,7 +182,7 @@
 
             },
 
-            cancel: function (button) {
+            cancel: function(button) {
 
             },
 
@@ -194,5 +193,4 @@
         });
 
     }
-
 </script>

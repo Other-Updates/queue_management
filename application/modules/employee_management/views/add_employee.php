@@ -71,7 +71,7 @@
                         <div class="col-md-4">
                             <div class="form-group has-feedback has-feedback-left">
                                 <label><strong>Retype Password:</strong></label><span class="req">*</span>
-                                <input type="password" name="retype_password" id="retype_password" minlength="6" class="form-control input-sm required" placeholder="Retype Password"  onChange="checkPasswordMatch();">
+                                <input type="password" name="retype_password" id="retype_password" minlength="6" class="form-control input-sm required" placeholder="Retype Password" onChange="checkPasswordMatch();">
                                 <span class="error_msg"></span>
                                 <div class="form-control-feedback">
                                     <i class="icon-lock"></i>
@@ -121,20 +121,17 @@
 
 <?php echo form_close(); ?>
 <script type="text/javascript">
+    //    function checkPasswordMatch() {
+    //        var password = $("#password").val();
+    //        var confirmPassword = $("#retype_password").val();
+    //
+    //        if (confirmPassword != "" && password != confirmPassword)
+    //            $("#divCheckPasswordMatch").html("Password and retype password should be same ");
+    //        else
+    //            $("#divCheckPasswordMatch").html("");
+    //    }
 
-
-
-//    function checkPasswordMatch() {
-//        var password = $("#password").val();
-//        var confirmPassword = $("#retype_password").val();
-//
-//        if (confirmPassword != "" && password != confirmPassword)
-//            $("#divCheckPasswordMatch").html("Password and retype password should be same ");
-//        else
-//            $("#divCheckPasswordMatch").html("");
-//    }
-
-    $('#emp_name').on('keyup blur', function () {
+    $('#emp_name').on('keyup blur', function() {
 
         this_val = $.trim($(this).val());
 
@@ -149,7 +146,7 @@
         }
 
     });
-    $('#username').on('keyup blur', function () {
+    $('#username').on('keyup blur', function() {
 
         this_val = $.trim($(this).val());
 
@@ -164,7 +161,7 @@
         }
 
     });
-    $('#username').on('keyup blur', function () {
+    $('#username').on('keyup blur', function() {
 
         this_val = $.trim($(this).val());
 
@@ -180,7 +177,7 @@
 
     });
 
-    $('#username').on('keyup blur', function () {
+    $('#username').on('keyup blur', function() {
 
         this_val = $.trim($(this).val());
 
@@ -192,9 +189,11 @@
 
             $.ajax({
                 type: 'POST',
-                data: {username: $.trim($('#username').val())},
+                data: {
+                    username: $.trim($('#username').val())
+                },
                 url: '<?php echo base_url(); ?>employee_management/employee/is_user_name_available/',
-                success: function (data) {
+                success: function(data) {
 
                     if (data == 'yes') {
 
@@ -216,7 +215,7 @@
 
 
 
-    $('#password').on('keyup blur', function () {
+    $('#password').on('keyup blur', function() {
 
         if ($.trim($(this).val()) == '') {
 
@@ -240,7 +239,7 @@
 
 
 
-    $('#retype_password').on('keyup blur', function () {
+    $('#retype_password').on('keyup blur', function() {
 
         if ($.trim($(this).val()) == '') {
 
@@ -264,7 +263,7 @@
 
 
 
-    $('#email').on('keyup blur', function () {
+    $('#email').on('keyup blur', function() {
 
         this_val = $.trim($(this).val());
 
@@ -284,9 +283,11 @@
 
             $.ajax({
                 type: 'POST',
-                data: {email: $.trim($('#email').val())},
+                data: {
+                    email: $.trim($('#email').val())
+                },
                 url: '<?php echo base_url(); ?>employee_management/employee/is_email_address_available/',
-                success: function (data) {
+                success: function(data) {
 
                     if (data == 'yes') {
 
@@ -308,7 +309,7 @@
 
 
 
-    $('#mobile').on('keyup blur', function () {
+    $('#mobile').on('keyup blur', function() {
 
         this_val = $.trim($(this).val());
 
@@ -330,9 +331,11 @@
 
             $.ajax({
                 type: 'POST',
-                data: {mobile: $.trim($('#mobile').val())},
+                data: {
+                    mobile: $.trim($('#mobile').val())
+                },
                 url: '<?php echo base_url(); ?>employee_management/employee/is_mobile_number_available/',
-                success: function (data) {
+                success: function(data) {
 
                     if (data == 'yes') {
 
@@ -354,10 +357,10 @@
 
 
 
-    $('.submit').click(function () {
+    $('.submit').click(function() {
 
         m = 0;
-        $('.required').each(function () {
+        $('.required').each(function() {
             this_val = $.trim($(this).val());
             this_id = $(this).attr('id');
 
@@ -417,9 +420,11 @@
             $.ajax({
                 type: 'POST',
                 async: false,
-                data: {username: $.trim($('#username').val())},
+                data: {
+                    username: $.trim($('#username').val())
+                },
                 url: '<?php echo base_url(); ?>employee_management/employee/is_user_name_available/',
-                success: function (data) {
+                success: function(data) {
 
                     if (data == 'yes') {
 
@@ -442,9 +447,11 @@
             $.ajax({
                 type: 'POST',
                 async: false,
-                data: {email: $.trim($('#email').val())},
+                data: {
+                    email: $.trim($('#email').val())
+                },
                 url: '<?php echo base_url(); ?>employee_management/employee/is_email_address_available/',
-                success: function (data) {
+                success: function(data) {
 
                     if (data == 'yes') {
 
@@ -467,9 +474,11 @@
             $.ajax({
                 type: 'POST',
                 async: false,
-                data: {mobile: $.trim($('#mobile').val())},
+                data: {
+                    mobile: $.trim($('#mobile').val())
+                },
                 url: '<?php echo base_url(); ?>employee_management/employee/is_mobile_number_available/',
-                success: function (data) {
+                success: function(data) {
 
                     if (data == 'yes') {
 
@@ -493,6 +502,4 @@
             return false;
 
     });
-
-
 </script>

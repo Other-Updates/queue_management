@@ -3,9 +3,11 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Employee extends MX_Controller {
+class Employee extends MX_Controller
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
         if ($this->user_auth->is_logged_in()) {
             $user_details = $this->user_auth->get_all_session();
@@ -37,7 +39,8 @@ class Employee extends MX_Controller {
         $this->load->model('employee_management/emp_increment_model');
     }
 
-    function index() {
+    function index()
+    {
         $data = array();
         $data['title'] = 'Members- Manage Members';
         $client_id = $this->user_auth->get_user_id();
@@ -46,7 +49,8 @@ class Employee extends MX_Controller {
         $this->template->render();
     }
 
-    function add() {
+    function add()
+    {
         $data = array();
         $data['title'] = 'Employee - Add New Employee';
         $client_id = $this->user_auth->get_user_id();
@@ -65,7 +69,8 @@ class Employee extends MX_Controller {
         $this->template->render();
     }
 
-    function edit($id) {
+    function edit($id)
+    {
         $data = array();
         $data['title'] = 'Employee - Edit Employee';
         if ($this->input->post('employee')) {
@@ -85,7 +90,8 @@ class Employee extends MX_Controller {
         $this->template->render();
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $id = $this->input->post('id');
         $data = array('is_deleted' => 1);
         $delete = $this->employee_model->delete_employee($id);
@@ -98,7 +104,8 @@ class Employee extends MX_Controller {
         }
     }
 
-    function is_user_name_available() {
+    function is_user_name_available()
+    {
         $username = $this->input->post('username');
         $id = $this->input->post('id');
         $result = $this->employee_model->is_user_available($username, $id);
@@ -109,7 +116,8 @@ class Employee extends MX_Controller {
         }
     }
 
-    function is_email_address_available() {
+    function is_email_address_available()
+    {
         $email = $this->input->post('email');
         $id = $this->input->post('id');
         $result = $this->employee_model->is_email_address_available($email, $id);
@@ -120,7 +128,8 @@ class Employee extends MX_Controller {
         }
     }
 
-    function is_mobile_number_available() {
+    function is_mobile_number_available()
+    {
         $mobile = $this->input->post('mobile');
         $id = $this->input->post('id');
         $result = $this->employee_model->is_mobile_number_available($mobile, $id);
@@ -130,5 +139,4 @@ class Employee extends MX_Controller {
             echo 'no';
         }
     }
-
 }

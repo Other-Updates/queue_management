@@ -83,11 +83,15 @@ class Api_model extends CI_Model
 
     public function check_login_details($data)
     {
-        $this->db->select('*');
+        $this->db->select('que_employee.emp_name,que_employee.password,que_employee.mobile_number,que_assign_counter.counter_id,que_counter.counter_name,que_employee.email_address');
         $this->db->where('emp_name', $data['emp_name']);
         $this->db->where('password', ($data['password']));
-        $this->db->where('status', 1);
+        // $this->db->where('status', 1);
         $this->db->from('que_employee');
+        $this->db->join('que_assign_counter', 'que_assign_counter.emp_id=que_employee.id');
+        $this->db->join('que_counter', 'que_counter.id=que_assign_counter.counter_id');
+
+
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->row_array();
@@ -110,12 +114,13 @@ class Api_model extends CI_Model
         }
         return false;
     }
-    public function check_emp($emp_data)
+    public function check_emp($counter_data)
     {
         $this->db->select('que_counter.id as counter_id,que_counter.counter_name,que_employee.emp_name,que_employee.mobile_number,que_employee.email_address,que_employee.password');
+        $this->db->where('counter_id',  $counter_data['id']);
         $this->db->from('que_employee');
-        $this->db->join('que_token_details', 'que_employee.id = que_token_details.emp_id');
-        $this->db->join('que_counter', 'que_token_details.counter_id=que_counter.id');
+        // $this->db->join('que_token_details', 'que_employee.id = que_token_details.emp_id');
+        $this->db->join('que_counter', 'que_employee.counter_id=que_counter.id');
         // $this->db->where('counter_id', $data);
 
         $query = $this->db->get();
@@ -161,7 +166,12 @@ class Api_model extends CI_Model
         // $data['iUpdatedAt'] = date('Y-m-d h:i:s');
         $this->db->where('id', $counter_data['id']);
         $this->db->update('que_counter', $counter_data);
+        // $this->db->where('counter_id', $counter_data['id']);
         $this->db->update('que_employee', $emp_data);
+        // $this->db->join('que_assign_counter', 'que_assign_counter.counter_id=que_counter.id');
+        $this->db->join('que_assign_counter', 'que_assign_counter.emp_id=que_employee.id');
+        // $this->db->join('que_counter', 'que_counter.id=que_assign_counter.counter_id');
+
 
         return true;
     }
@@ -215,9 +225,11 @@ class Api_model extends CI_Model
 
     public function get_customer_details($data)
     {
-        $this->db->select('*');
-        $this->db->where('counter_id', $data);
-        $this->db->from(' que_assign_counter');
+        $this->db->select('que_employee.emp_name,que_employee.password,que_employee.mobile_number,que_assign_counter.counter_id,que_counter.counter_name,que_employee.email_address');
+        $this->db->where('counter_id', $data['counter_id']);
+        $this->db->join('que_assign_counter', 'que_assign_counter.emp_id=que_employee.id');
+        $this->db->join('que_counter', 'que_counter.id=que_assign_counter.counter_id');
+        $this->db->from('que_employee');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->row_array();
@@ -235,13 +247,11 @@ class Api_model extends CI_Model
         return FALSE;
     }
 
-    public function get_queue_details_by_insert_id($token_data, $counter_data)
+    public function get_queue_details_by_insert_id($token_data)
     {
         $this->db->select('que_counter.id as counter_id,que_counter.counter_name,que_token_details.token_number,que_token_details.id as token_id,que_token_details.token_status,que_token_details.remarks');
-        // $this->db->where('id', $token_data['id']);
+        $this->db->where('que_token_details.id', $token_data['id']);
         $this->db->from('que_token_details');
-        // $this->db->where('id', $counter_data['id']);
-        // $this->db->from('que_counter', $counter_data);
         $this->db->join('que_counter', 'que_token_details.counter_id=que_counter.id', 'left');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -293,7 +303,7 @@ class Api_model extends CI_Model
 
     public function get_queue_category_list()
     {
-        $this->db->select('que_category.id,que_category.sub_category,que_category_type.id,que_category_type.category_type');
+        $this->db->select('que_category.id as category_id,que_category.sub_category,que_category_type.id as sub_category_id,que_category_type.category_type');
         $this->db->from('que_category');
         $this->db->join('que_category_type', 'que_category.category_id=que_category_type.id', 'right');
         $query = $this->db->get();
@@ -303,9 +313,10 @@ class Api_model extends CI_Model
             return false;
         }
     }
-    public function get_token_list()
+    public function get_token_list($json_input)
     {
-        $this->db->select('que_token_details.token_number,que_token_details.id,que_token_details.counter_id,que_counter.id,que_counter.counter_name,que_counter.status');
+        $this->db->select('que_token_details.token_number,que_token_details.id as token_id,que_token_details.counter_id,que_counter.id,que_counter.counter_name,que_token_details.token_status');
+        $this->db->where('counter_id', $json_input['counter_id']);
         $this->db->from('que_token_details');
         $this->db->join('que_counter', 'que_token_details.counter_id=que_counter.id', 'right');
         $query = $this->db->get();
@@ -318,6 +329,7 @@ class Api_model extends CI_Model
     public function get_created_token()
     {
         $this->db->select('que_category.category_id,que_category_type.category_type,que_category_type.id as sub_category_id,que_category.sub_category,que_token_details.id as token_id,que_token_details.token_number,que_token_details.counter_id,que_token_details.created_date,que_counter.id,que_counter.counter_name,que_counter.status');
+        // $this->db->where('que_token_details.category_id');
         $this->db->from('que_token_details');
         $this->db->from('que_category');
         $this->db->join('que_counter', 'que_token_details.counter_id=que_counter.id', 'right');
@@ -369,6 +381,7 @@ class Api_model extends CI_Model
 
     public function update_queue_status($token_data, $counter_data)
     {
+        $this->db->where('counter_id', $counter_data['id']);
         $this->db->where('id', $token_data['id']);
         $this->db->update('que_token_details', $token_data);
         $this->db->where('id', $counter_data['id']);
@@ -376,9 +389,10 @@ class Api_model extends CI_Model
         return true;
     }
 
-    public function get_terms_and_conditions()
+    public function get_terms_and_conditions($data)
     {
-        $this->db->select('*');
+        // $this->db->select('*');
+        $this->db->where('token_number', $data['token_number']);
         $this->db->from('que_feedback');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -386,9 +400,10 @@ class Api_model extends CI_Model
         } else
             return false;
     }
-    public function reassign_missed_token()
+    public function reassign_missed_token($data)
     {
-        $this->db->select('token_number');
+        // $this->db->select('*');
+        $this->db->where('token_number', $data['token_number']);
         $this->db->from('que_token_details');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -396,10 +411,10 @@ class Api_model extends CI_Model
         } else
             return false;
     }
-    public function reassign_hold_token()
+    public function reassign_hold_token($data)
     {
-        $this->db->select('token_number');
-        $this->db->where('token_status', 2);
+        $this->db->select('*');
+        $this->db->where('token_number', $data['token_number']);
         $this->db->from('que_token_details');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {

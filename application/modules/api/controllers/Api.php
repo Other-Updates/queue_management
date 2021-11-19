@@ -330,7 +330,7 @@ class Api extends REST_Controller
 	{
 		$json_input = $this->_get_customer_post_values();
 		if (!empty($json_input)) {
-			$user_details = $this->api_model->get_customer_details($json_input['counter_id']);
+			$user_details = $this->api_model->get_customer_details($json_input);
 			if ($json_input['counter_id'] == "") {
 				$output = array(
 					'status' => 'false',
@@ -402,6 +402,9 @@ class Api extends REST_Controller
 			if ($profile) {
 				// $update_data = $this->api_model->check_counter($counter_data);
 				$update_data = $this->api_model->check_emp($emp_data, $counter_data);
+				// echo "<pre>";
+				// print_r($update);
+				// exit;
 				$output = array('status' => 'Success', 'message' => 'Profile details updated', 'data' => $update_data);
 				$this->response($output);
 			} else {
@@ -416,9 +419,14 @@ class Api extends REST_Controller
 
 	public function customer_logout()
 	{
+		$data = array();
 		$data = $this->_get_customer_post_values();
+		// echo "<pre>";
+		// print($data);
+		// exit;
 		if (!empty($data)) {
-			$logout = $this->api_model->get_customer_details($data['counter_id']);
+			$logout = $this->api_model->get_customer_details($data);
+
 			if ($data['counter_id'] == "") {
 				$output = array(
 					'status' => 'false',
@@ -570,25 +578,30 @@ class Api extends REST_Controller
 	}
 	public function get_token_list()
 	{
-		$token_list = $this->api_model->get_token_list();
-		if ($token_list['counter_id'] == "") {
-			$output = array(
-				'status' => 'false',
-				'code' => '422',
-				'message' => "counter_id is required"
-			);
-			$this->response($output);
-			exit;
-		}
-		if ($token_list['counter_name'] == "") {
-			$output = array(
-				'status' => 'false',
-				'code' => '422',
-				'message' => "counter_id is required"
-			);
-			$this->response($output);
-			exit;
-		}
+		$json_input = $this->_get_customer_post_values();
+
+		$token_list = $this->api_model->get_token_list($json_input);
+		// echo "<pre>";
+		// print_r($token_list);
+		// exit;
+		// if ($token_list['counter_id'] == "") {
+		// 	$output = array(
+		// 		'status' => 'false',
+		// 		'code' => '422',
+		// 		'message' => "counter_id is required"
+		// 	);
+		// 	$this->response($output);
+		// 	exit;
+		// }
+		// if ($token_list['counter_name'] == "") {
+		// 	$output = array(
+		// 		'status' => 'false',
+		// 		'code' => '422',
+		// 		'message' => "counter_name is required"
+		// 	);
+		// 	$this->response($output);
+		// 	exit;
+		// }
 		if ($token_list) {
 			// if ($token_list['counter_id'] == "") {
 			// 	$output = array(
@@ -715,7 +728,7 @@ class Api extends REST_Controller
 	public function update_queue_status()
 	{
 		$json_input = $this->_get_customer_post_values();
-		$data = array();
+		// $data = array();
 		// echo "<pre>";
 		// print_r($json_input);
 		// exit;
@@ -774,9 +787,9 @@ class Api extends REST_Controller
 
 	public function update_feedback()
 	{
-		$terms = $this->_get_customer_post_values();
+		$data = $this->_get_customer_post_values();
 		if (!empty($terms)) {
-			$terms = $this->api_model->get_terms_and_conditions();
+			$terms = $this->api_model->get_terms_and_conditions($data);
 			if ($terms) {
 				$output = array('status' => 'success', 'message' =>  "Feedback has been updated successfully");
 				$this->response($output);
@@ -791,9 +804,9 @@ class Api extends REST_Controller
 	}
 	public function reassign_missed_token()
 	{
-		$terms = $this->_get_customer_post_values();
-		if (!empty($terms)) {
-			$terms = $this->api_model->reassign_missed_token();
+		$data = $this->_get_customer_post_values();
+		if (!empty($data)) {
+			$terms = $this->api_model->reassign_missed_token($data);
 			if ($terms['token_number'] == "") {
 				$output = array(
 					'status' => 'false',
@@ -817,9 +830,11 @@ class Api extends REST_Controller
 	}
 	public function reassign_hold_token()
 	{
-		$terms = $this->_get_customer_post_values();
-		if (!empty($terms)) {
-			$terms = $this->api_model->reassign_hold_token();
+
+		$data = $this->_get_customer_post_values();
+
+		if (!empty($data)) {
+			$terms = $this->api_model->reassign_hold_token($data);
 			if ($terms) {
 				$output = array('status' => 'success', 'message' =>  "Hold Token Reassigned Successfully");
 				$this->response($output);

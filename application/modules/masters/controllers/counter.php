@@ -3,9 +3,11 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Counter extends MX_Controller {
+class Counter extends MX_Controller
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
         if ($this->user_auth->is_logged_in()) {
             $user_details = $this->user_auth->get_all_session();
@@ -30,7 +32,8 @@ class Counter extends MX_Controller {
         date_default_timezone_set($this->timezone->timezone());
     }
 
-    function index() {
+    function index()
+    {
         $data = array();
         $data['title'] = 'Masters - Manage Counter';
         $client_id = $this->user_auth->get_user_id();
@@ -39,7 +42,8 @@ class Counter extends MX_Controller {
         $this->template->render();
     }
 
-    function add() {
+    function add()
+    {
         $data = array();
         $data['title'] = 'Masters - Add New Counter';
         $client_id = $this->user_auth->get_user_id();
@@ -57,7 +61,8 @@ class Counter extends MX_Controller {
         $this->template->render();
     }
 
-    function edit($id) {
+    function edit($id)
+    {
         $data = array();
         $data['title'] = 'Masters - Edit Counter';
         $client_id = $this->user_auth->get_user_id();
@@ -77,7 +82,8 @@ class Counter extends MX_Controller {
         $this->template->render();
     }
 
-    function delete($id) {
+    function delete($id)
+    {
         $id = $this->input->post('id');
         $data = array('is_deleted' => 1);
         $delete = $this->counter_model->delete_counter($id, $data);
@@ -91,7 +97,8 @@ class Counter extends MX_Controller {
         }
     }
 
-    function is_counter_name_available() {
+    function is_counter_name_available()
+    {
         $client_id = $this->user_auth->get_user_id();
         $counter_name = $this->input->post('counter_name');
         $id = $this->input->post('id');
@@ -102,5 +109,4 @@ class Counter extends MX_Controller {
             echo 'no';
         }
     }
-
 }
